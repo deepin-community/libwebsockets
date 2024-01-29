@@ -1,0 +1,4 @@
+#echo-actually-exit.patch
+#echo-off-by-one.patch
+#add-missing-headers.patch
+remove-LWS_WITH_EXTERNAL_POLL-redefine.patch
