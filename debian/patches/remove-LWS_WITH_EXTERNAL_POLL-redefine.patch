@@ -1,0 +1,21 @@
+From 41d7306eb4557cd6003d99fe8ffd5b77e0026cc6 Mon Sep 17 00:00:00 2001
+From: level 6 <28563107+aphage@users.noreply.github.com>
+Date: Tue, 2 Jan 2024 10:46:57 +0800
+Subject: [PATCH] test-server-extpoll: remove LWS_WITH_EXTERNAL_POLL redefine
+
+---
+ test-apps/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/test-apps/CMakeLists.txt b/test-apps/CMakeLists.txt
+index 8506a992cd..485391aebd 100644
+--- a/test-apps/CMakeLists.txt
++++ b/test-apps/CMakeLists.txt
+@@ -163,7 +163,6 @@ if ((LWS_ROLE_H1 OR LWS_ROLE_H2))
+ 			set_property(
+ 				TARGET test-server-extpoll
+ 				PROPERTY COMPILE_DEFINITIONS 
+-					LWS_WITH_EXTERNAL_POLL
+ 					INSTALL_DATADIR="${CMAKE_INSTALL_PREFIX}/share"
+ 				)
+ 
