@@ -1,3 +1,10 @@
+libwebsockets (4.3.3-1deepin1) unstable; urgency=medium
+
+  * Fix CVE-2025-11677: Use After Free in lws_handshake_server when
+    upgrade header is not valid (CWE-416)
+
+ -- deepin-ci-robot <packages@deepin.org>  Sun, 17 May 2026 02:14:59 +0800
+
 libwebsockets (4.3.3-1) unstable; urgency=medium
 
   * New upstream release.
