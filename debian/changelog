@@ -1,3 +1,10 @@
+libwebsockets (4.3.3-1deepin3) unstable; urgency=medium
+
+  * Fix CVE-2025-1866: Improper Restriction of Operations within the
+    Bounds of a Memory Buffer in win32port/zlib/inftrees.c (CWE-119)
+
+ -- deepin-ci-robot <packages@deepin.org>  Sun, 17 May 2026 02:23:44 +0800
+
 libwebsockets (4.3.3-1deepin2) unstable; urgency=medium
 
   * Fix CVE-2025-11678: Stack-based Buffer Overflow in
