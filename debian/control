@@ -3,14 +3,17 @@ Section: libs
 Priority: optional
 Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Uploaders: Peter Pentchev <roam@ringlet.net>
-Build-Depends: debhelper-compat (= 13), pkg-config, cmake,
+Build-Depends: dpkg-dev (>= 1.22.5), debhelper-compat (= 13), pkgconf, cmake,
  libcap-dev [linux-any], libev-dev, libuv1-dev, libglib2.0-dev, zlib1g-dev,
  libssl-dev, openssl
-Standards-Version: 4.6.0
+Standards-Version: 4.7.0
 Homepage: https://libwebsockets.org/
 Rules-Requires-Root: no
 
-Package: libwebsockets19
+Package: libwebsockets19t64
+Provides: ${t64:Provides}
+Replaces: libwebsockets19
+Breaks: libwebsockets19 (<< ${source:Version})
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -24,7 +27,7 @@ Description: lightweight C websockets library
 Package: libwebsockets-evlib-ev
 Architecture: any
 Multi-Arch: same
-Depends: libwebsockets19 (= ${binary:Version}),
+Depends: libwebsockets19t64 (= ${binary:Version}),
 	${shlibs:Depends}, ${misc:Depends}
 Description: lightweight C websockets library
  Libwebsockets is a lightweight pure C library for both websockets
@@ -36,7 +39,7 @@ Description: lightweight C websockets library
 Package: libwebsockets-evlib-uv
 Architecture: any
 Multi-Arch: same
-Depends: libwebsockets19 (= ${binary:Version}),
+Depends: libwebsockets19t64 (= ${binary:Version}),
 	${shlibs:Depends}, ${misc:Depends}
 Description: lightweight C websockets library
  Libwebsockets is a lightweight pure C library for both websockets
@@ -48,7 +51,7 @@ Description: lightweight C websockets library
 Package: libwebsockets-evlib-glib
 Architecture: any
 Multi-Arch: same
-Depends: libwebsockets19 (= ${binary:Version}),
+Depends: libwebsockets19t64 (= ${binary:Version}),
 	${shlibs:Depends}, ${misc:Depends}
 Description: lightweight C websockets library
  Libwebsockets is a lightweight pure C library for both websockets
@@ -61,7 +64,7 @@ Package: libwebsockets-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libwebsockets19 (= ${binary:Version}),
+Depends: libwebsockets19t64 (= ${binary:Version}),
 	libwebsockets-evlib-ev (= ${binary:Version}),
 	libwebsockets-evlib-uv (= ${binary:Version}),
 	libwebsockets-evlib-glib (= ${binary:Version}),
@@ -79,7 +82,7 @@ Package: libwebsockets-test-server
 Section: utils
 Architecture: any
 Multi-Arch: foreign
-Depends: libwebsockets19 (= ${binary:Version}),
+Depends: libwebsockets19t64 (= ${binary:Version}),
 	libwebsockets-test-server-common (= ${source:Version}),
 	${shlibs:Depends}, ${misc:Depends}
 Description: lightweight C websockets library - test servers

@@ -386,9 +386,6 @@ lws_create_context(const struct lws_context_creation_info *info)
 #if defined(LWS_WITH_CACHE_NSCOOKIEJAR) && defined(LWS_WITH_CLIENT)
 	struct lws_cache_creation_info ci;
 #endif
-#if defined(LWS_WITH_MBEDTLS)
-	char mbedtls_version[32];
-#endif
 
 #if defined(__ANDROID__)
 	struct rlimit rt;
@@ -545,6 +542,11 @@ lws_create_context(const struct lws_context_creation_info *info)
 		fatal_exit_defer = !!info->foreign_loops;
 		us_wait_resolution = 0;
 	}
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_LIBUV)) {
+		lwsl_cx_err(context, "Application wants libuv, but lws not built with it");
+		goto bail;
+	}
 #endif
 
 #if defined(LWS_WITH_LIBEVENT)
@@ -552,6 +554,11 @@ lws_create_context(const struct lws_context_creation_info *info)
 		extern const lws_plugin_evlib_t evlib_event;
 		plev = &evlib_event;
 		us_wait_resolution = 0;
+	}
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_LIBEVENT)) {
+		lwsl_cx_err(context, "Application wants libevent, but lws not built with it");
+		goto bail;
 	}
 #endif
 
@@ -561,6 +568,11 @@ lws_create_context(const struct lws_context_creation_info *info)
 		plev = &evlib_glib;
 		us_wait_resolution = 0;
 	}
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_GLIB)) {
+		lwsl_cx_err(context, "Application wants glib, but lws not built with it");
+		goto bail;
+	}
 #endif
 
 #if defined(LWS_WITH_LIBEV)
@@ -568,6 +580,11 @@ lws_create_context(const struct lws_context_creation_info *info)
 		extern const lws_plugin_evlib_t evlib_ev;
 		plev = &evlib_ev;
 		us_wait_resolution = 0;
+	}
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_LIBEV)) {
+		lwsl_cx_err(context, "Application wants libev, but lws not built with it");
+		goto bail;
 	}
 #endif
 
@@ -577,6 +594,11 @@ lws_create_context(const struct lws_context_creation_info *info)
         plev = &evlib_sd;
         us_wait_resolution = 0;
     }
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_SDEVENT)) {
+		lwsl_cx_err(context, "Application wants sdevent, but lws not built with it");
+		goto bail;
+	}
 #endif
 
 #if defined(LWS_WITH_ULOOP)
@@ -585,6 +607,11 @@ lws_create_context(const struct lws_context_creation_info *info)
         plev = &evlib_uloop;
         us_wait_resolution = 0;
     }
+#else
+	if (lws_check_opt(info->options, LWS_SERVER_OPTION_ULOOP)) {
+		lwsl_cx_err(context, "Application wants uloop, but lws not built with it");
+		goto bail;
+	}
 #endif
 
 #endif /* with event libs */
@@ -788,11 +815,16 @@ lws_create_context(const struct lws_context_creation_info *info)
 #endif /* network */
 
 #if defined(LWS_WITH_MBEDTLS)
-	mbedtls_version_get_string(mbedtls_version);
-#endif
+	{
+		char mbedtls_version[32];
 
-#if defined(LWS_WITH_MBEDTLS)
-	lwsl_cx_notice(context, "LWS: %s, MbedTLS-%s %s%s", library_version, mbedtls_version, opts_str, s);
+#if defined(MBEDTLS_VERSION_C)
+		mbedtls_version_get_string(mbedtls_version);
+#else
+		lws_snprintf(mbedtls_version, sizeof(mbedtls_version), "%s", MBEDTLS_VERSION_STRING);
+#endif
+		lwsl_cx_notice(context, "LWS: %s, MbedTLS-%s %s%s", library_version, mbedtls_version, opts_str, s);
+	}
 #else
 	lwsl_cx_notice(context, "LWS: %s, %s%s", library_version, opts_str, s);
 #endif
