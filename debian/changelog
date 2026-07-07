@@ -1,3 +1,9 @@
+libwebsockets (4.3.5-1+deb13u1deepin1) unstable; urgency=medium
+
+  * Revert 64-bit time_t transition changes
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Tue, 07 Jul 2026 15:26:36 +0800
+
 libwebsockets (4.3.5-1+deb13u1) trixie; urgency=medium
 
   * CVE-2025-11677 (Closes: #1118747)
