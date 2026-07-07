@@ -1,3 +1,31 @@
+libwebsockets (4.3.5-1+deb13u1deepin1) unstable; urgency=medium
+
+  * Revert 64-bit time_t transition changes
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Tue, 07 Jul 2026 15:26:36 +0800
+
+libwebsockets (4.3.5-1+deb13u1) trixie; urgency=medium
+
+  * CVE-2025-11677 (Closes: #1118747)
+  * CVE-2025-11678 (Closes: #1118746)
+
+ -- Moritz Mühlenhoff <jmm@debian.org>  Tue, 04 Nov 2025 00:02:18 +0100
+
+libwebsockets (4.3.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Switch pkg-config dependency to pkgconf.
+  * Update Standards-Version to 4.7.0 .
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 08 Mar 2025 16:27:20 +0100
+
+libwebsockets (4.3.3-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.  Closes: #1062730
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 01 Mar 2024 07:41:57 +0000
+
 libwebsockets (4.3.3-1) unstable; urgency=medium
 
   * New upstream release.

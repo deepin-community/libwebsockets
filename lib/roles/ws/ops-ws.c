@@ -943,7 +943,7 @@ rops_handle_POLLIN_ws(struct lws_context_per_thread *pt, struct lws *wsi,
 	unsigned int pending = 0;
 	struct lws_tokens ebuf;
 	char buffered = 0;
-	int n = 0, m, sanity = 10;
+	int n = 0, m, sanity = 100;
 #if defined(LWS_WITH_HTTP2)
 	struct lws *wsi1;
 #endif
@@ -1223,8 +1223,18 @@ drain:
 		else
 			pending = pending > wsi->a.context->pt_serv_buf_size ?
 				wsi->a.context->pt_serv_buf_size : pending;
-		if (--sanity)
+		if (--sanity) {
+#if !defined(LWS_WITHOUT_EXTENSIONS)
+			while (wsi->ws->rx_draining_ext) {
+				// RX Extension needs to be drained before next read
+				n = lws_ws_rx_sm(wsi, ALREADY_PROCESSED_IGNORE_CHAR, 0);
+				if (n < 0) {
+					return LWS_HPI_RET_PLEASE_CLOSE_ME;
+				}
+			}
+#endif
 			goto read;
+		}
 		else
 			/*
 			 * Something has gone wrong, we are spinning...
